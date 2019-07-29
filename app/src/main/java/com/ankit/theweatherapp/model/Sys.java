@@ -7,8 +7,11 @@ public class Sys {
 
     @SerializedName("country")
     private String mCountry;
-    @SerializedName("id")
-    private Long mId;
+
+
+
+//    @SerializedName("id")
+//    private Long sId;
     @SerializedName("message")
     private Double mMessage;
     @SerializedName("sunrise")
@@ -24,14 +27,6 @@ public class Sys {
 
     public void setCountry(String country) {
         mCountry = country;
-    }
-
-    public Long getId() {
-        return mId;
-    }
-
-    public void setId(Long id) {
-        mId = id;
     }
 
     public Double getMessage() {
@@ -65,5 +60,12 @@ public class Sys {
     public void setType(Long type) {
         mType = type;
     }
+//    public Long getsId() {
+//        return sId;
+//    }
+//
+//    public void setsId(Long sId) {
+//        this.sId = sId;
+//    }
 
 }

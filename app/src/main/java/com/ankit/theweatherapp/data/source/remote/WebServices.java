@@ -11,5 +11,5 @@ import retrofit2.http.Query;
 public interface WebServices {
 
     @GET("data/2.5/find")
-    Call<Test1> getCurrentTemp(@Query("q") String city, @Query("appid") String api_key);
+    Call<Test1> getCurrentTemp(@Query("q") String city, @Query("appid") String api_key, @Query("units") String units);
 }

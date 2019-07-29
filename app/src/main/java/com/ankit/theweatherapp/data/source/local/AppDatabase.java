@@ -6,11 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.ankit.theweatherapp.model.List;
 import com.ankit.theweatherapp.model.Main;
 
 import javax.inject.Inject;
 
-@Database(entities = {Main.class}, version = 2,exportSchema = false)
+@Database(entities = {List.class}, version = 2,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract WeatherDao weatherDao();

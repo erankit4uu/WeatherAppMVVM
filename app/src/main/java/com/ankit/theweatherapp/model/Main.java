@@ -5,11 +5,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
-@Entity
 public class Main {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
     @SerializedName("humidity")
     private Long mHumidity;
     @SerializedName("pressure")
@@ -60,12 +57,6 @@ public class Main {
     public void setTempMin(Double tempMin) {
         mTempMin = tempMin;
     }
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
 }

@@ -21,19 +21,17 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.Provides;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WeatherRepo {
-    MutableLiveData<List<Main>> data;
+    MutableLiveData<List<com.ankit.theweatherapp.model.List>> data;
     Executor executor;
     WebServices webServices;
     ArchitectureApp architectureApp;
     WeatherDao weatherDao;
-    List<Main> mainList;
+    List<com.ankit.theweatherapp.model.List> mainList;
 
     public WeatherRepo(Executor executor, WebServices webServices, WeatherDao weatherDao){
         this.executor = executor;
@@ -44,32 +42,33 @@ public class WeatherRepo {
     }
 
     @Inject
-    public LiveData<List<Main>> getWeatherData(){
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mainList = weatherDao.getAllData();
-                if (!mainList.isEmpty()) {
-                    List<Main> mainData = mainList;
-                    data.postValue(mainData);
-                } else {
-                    webServices.getCurrentTemp("Delhi", Constants.API_KEY)
-                            .enqueue(new Callback<Test1>() {
-                                @Override
-                                public void onResponse(@NotNull Call<Test1> call, @NotNull Response<Test1> response) {
-                                    assert response.body() != null;
-                                    Log.i("Temp",response.body().getMlist().get(0).getMain().getTemp().toString());
+    public LiveData<List<com.ankit.theweatherapp.model.List>> getWeatherData(){
+        executor.execute(() -> {
+            mainList = weatherDao.getAllData();
+            if (!mainList.isEmpty()) {
+                List<com.ankit.theweatherapp.model.List> mainData = mainList;
+                data.postValue(mainData);
+            } else {
+                webServices.getCurrentTemp("Delhi", Constants.API_KEY, "metric")
+                        .enqueue(new Callback<Test1>() {
+                            @Override
+                            public void onResponse(@NotNull Call<Test1> call, @NotNull Response<Test1> response) {
+                                assert response.body() != null;
+                                Log.i("Temperature",response.body().getMlist().get(0).getMain().getTemp().toString());
+                                executor.execute(() -> {
+                                    mainList = response.body().getMlist();
+                                    data.postValue(mainList);
+                                });
 
-                                }
+                            }
 
-                                @Override
-                                public void onFailure(@NotNull Call<Test1> call, @NotNull Throwable t) {
-                                    Log.i("fail", t.getMessage());
+                            @Override
+                            public void onFailure(@NotNull Call<Test1> call, @NotNull Throwable t) {
+                                Log.i("fail", t.getMessage());
 //                                Toast.makeText(, t.getMessage(),Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            }
+                        });
 
-                }
             }
         });
         return data;

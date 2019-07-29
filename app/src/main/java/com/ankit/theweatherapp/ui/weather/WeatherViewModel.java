@@ -26,7 +26,7 @@ public class WeatherViewModel extends ViewModel {
     public WeatherRepo repo;
     Activity activity;
     ArchitectureApp architectureApp;
-    public LiveData<List<Main>> weatherList;
+    public LiveData<List<com.ankit.theweatherapp.model.List>> weatherList;
 
     WeatherDao weatherDao;
     @Inject

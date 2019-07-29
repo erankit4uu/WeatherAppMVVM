@@ -1,30 +1,53 @@
 
 package com.ankit.theweatherapp.model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.ankit.theweatherapp.model.convertors.WeatherConvertor;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
+@TypeConverters(WeatherConvertor.class)
 public class List {
 
     @SerializedName("clouds")
+    @Embedded
     private Clouds mClouds;
     @SerializedName("coord")
+    @Embedded
     private Coord mCoord;
     @SerializedName("dt")
     private Long mDt;
+
+    @PrimaryKey
     @SerializedName("id")
-    private Long mId;
+    private Long id;
+
     @SerializedName("main")
+    @Embedded
     private Main mMain;
     @SerializedName("name")
     private String mName;
-    @SerializedName("rain")
-    private Rain mRain;
+
+
+
+//    @SerializedName("rain")
+//    @Embedded
+//    private Rain mRain;
+
     @SerializedName("snow")
-    private String mSnow;
+    private String snow;
     @SerializedName("sys")
+    @Embedded
     private Sys mSys;
+
     private java.util.List<Weather> weather;
+
     @SerializedName("wind")
+    @Embedded
     private Wind mWind;
 
     public Clouds getClouds() {
@@ -52,11 +75,11 @@ public class List {
     }
 
     public Long getId() {
-        return mId;
+        return id;
     }
 
     public void setId(Long id) {
-        mId = id;
+        this.id = id;
     }
 
     public Main getMain() {
@@ -75,21 +98,7 @@ public class List {
         mName = name;
     }
 
-    public Object getRain() {
-        return mRain;
-    }
 
-    public void setRain(Rain rain) {
-        mRain = rain;
-    }
-
-    public Object getSnow() {
-        return mSnow;
-    }
-
-    public void setSnow(String snow) {
-        mSnow = snow;
-    }
 
     public Sys getSys() {
         return mSys;
@@ -114,5 +123,18 @@ public class List {
     public void setWind(Wind wind) {
         mWind = wind;
     }
+    public String getSnow() {
+        return snow;
+    }
 
+    public void setSnow(String snow) {
+        this.snow = snow;
+    }
+//    public Rain getmRain() {
+//        return mRain;
+//    }
+//
+//    public void setmRain(Rain mRain) {
+//        this.mRain = mRain;
+//    }
 }
