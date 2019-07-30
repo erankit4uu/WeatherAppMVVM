@@ -32,6 +32,8 @@ public class WeatherRepo {
     ArchitectureApp architectureApp;
     WeatherDao weatherDao;
     List<com.ankit.theweatherapp.model.List> mainList;
+    private final String UNITS = "metric";
+    private final String CITY = "Delhi";
 
     public WeatherRepo(Executor executor, WebServices webServices, WeatherDao weatherDao){
         this.executor = executor;
@@ -47,9 +49,10 @@ public class WeatherRepo {
             mainList = weatherDao.getAllData();
             if (!mainList.isEmpty()) {
                 List<com.ankit.theweatherapp.model.List> mainData = mainList;
+                Log.d("data from db", mainData.get(0).getName());
                 data.postValue(mainData);
             } else {
-                webServices.getCurrentTemp("Delhi", Constants.API_KEY, "metric")
+                webServices.getCurrentTemp(CITY, Constants.API_KEY, UNITS)
                         .enqueue(new Callback<Test1>() {
                             @Override
                             public void onResponse(@NotNull Call<Test1> call, @NotNull Response<Test1> response) {
@@ -57,6 +60,7 @@ public class WeatherRepo {
                                 Log.i("Temperature",response.body().getMlist().get(0).getMain().getTemp().toString());
                                 executor.execute(() -> {
                                     mainList = response.body().getMlist();
+                                    weatherDao.insertTemp(response.body().getMlist());
                                     data.postValue(mainList);
                                 });
 
@@ -65,7 +69,6 @@ public class WeatherRepo {
                             @Override
                             public void onFailure(@NotNull Call<Test1> call, @NotNull Throwable t) {
                                 Log.i("fail", t.getMessage());
-//                                Toast.makeText(, t.getMessage(),Toast.LENGTH_LONG).show();
                             }
                         });
 

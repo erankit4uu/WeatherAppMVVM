@@ -6,7 +6,7 @@ import com.ankit.theweatherapp.data.repo.WeatherRepo;
 import com.ankit.theweatherapp.data.source.local.AppDatabase;
 import com.ankit.theweatherapp.data.source.remote.RetrofitClient;
 import com.ankit.theweatherapp.data.source.remote.WebServices;
-import com.ankit.theweatherapp.di.AppModule;
+import com.ankit.theweatherapp.achitecture.di.AppModule;
 
 import java.util.concurrent.Executors;
 
@@ -14,18 +14,15 @@ import java.util.concurrent.Executors;
 public class ArchitectureApp extends Application {
 
     public ArchitectureApp instance;
-    public ApplicationComponent component;
-    public AppDatabase appDatabase;
-    public static WeatherRepo REPROSITORY;
-
+    public static WeatherRepo REPOSITORY;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
 
-        //Repo Inistiate
-        REPROSITORY = new WeatherRepo(Executors.newSingleThreadExecutor(), RetrofitClient.getClient().create(WebServices.class),
+        //Repo initialize
+        REPOSITORY = new WeatherRepo(Executors.newSingleThreadExecutor(), RetrofitClient.getClient().create(WebServices.class),
                 AppDatabase.getInstance(this).weatherDao());
 
         DaggerApplicationComponent.builder()
@@ -38,7 +35,5 @@ public class ArchitectureApp extends Application {
     public ArchitectureApp getInstance() {
         return instance;
     }
-
-
 
 }

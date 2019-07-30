@@ -1,4 +1,4 @@
-package com.ankit.theweatherapp.di;
+package com.ankit.theweatherapp.achitecture.di;
 
 import android.app.Application;
 
