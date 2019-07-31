@@ -1,7 +1,5 @@
 package com.ankit.theweatherapp.data.source.remote;
 
-import javax.inject.Singleton;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -13,6 +11,7 @@ public class RetrofitClient {
     static OkHttpClient client =  new OkHttpClient.Builder()
             .addInterceptor(logging)
             .build();
+
     private static Retrofit retrofit = null;
 
     private static String BASE_URL = "https://api.openweathermap.org/";
@@ -21,6 +20,7 @@ public class RetrofitClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

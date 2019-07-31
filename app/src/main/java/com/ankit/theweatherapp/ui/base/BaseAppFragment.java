@@ -10,9 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseAppFragment extends Fragment {
-    ViewDataBinding mBinding;
+    private ViewDataBinding mBinding;
 
     @Nullable
     @Override
@@ -22,6 +23,7 @@ public abstract class BaseAppFragment extends Fragment {
 
     protected ViewDataBinding binding(LayoutInflater inflater, ViewGroup container, int layoutId) {
         mBinding = DataBindingUtil.inflate(inflater, layoutId, container, false);
+
         return mBinding;
     }
 }

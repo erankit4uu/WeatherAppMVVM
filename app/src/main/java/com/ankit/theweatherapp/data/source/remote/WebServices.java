@@ -12,4 +12,7 @@ public interface WebServices {
 
     @GET("data/2.5/find")
     Call<Test1> getCurrentTemp(@Query("q") String city, @Query("appid") String api_key, @Query("units") String units);
+
+    @GET("data/2.5/forecast/hourly")
+    Call<Test1> getTempHourly(@Query("zip") String zipCode, @Query("appid") String api_key, @Query("units") String units);
 }

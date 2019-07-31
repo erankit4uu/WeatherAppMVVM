@@ -22,9 +22,9 @@ public class List {
     @SerializedName("dt")
     private Long mDt;
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
-    private Long id;
+    private Long id = 0L;
 
     @SerializedName("main")
     @Embedded
